@@ -8,6 +8,7 @@ import mlflow
 import matplotlib.pyplot as plt 
 import dagshub
 
+dagshub.init(repo_owner="raaggeee", repo_name="mlflow-demo", mlflow=True)
 mlflow.set_tracking_uri("https://dagshub.com/raaggeee/mlflow-demo.mlflow")
 mlflow.set_experiment("antenna-fault-torch")
 
@@ -26,9 +27,9 @@ class Model(nn.Module):
 
         return x
 
-def train(X_train, y_train, epochs, batch_size=10, X_test=None, y_test=None):
+def train(X_train, y_train, epochs, batch_size=20, X_test=None, y_test=None):
     input_shape = X_train.shape[1] # tenspr
-    model = Model(input_shape=input_shape, hidden_shape=10, output_shape=1)
+    model = Model(input_shape=input_shape, hidden_shape=30, output_shape=1)
     optim = torch.optim.Adam(model.parameters(), lr=0.001)
     data_rows = X_train.shape[0]
     criterion = nn.MSELoss()
@@ -97,7 +98,8 @@ def main():
 
         plt.plot(np.array(loss))
         plt.savefig("losses.png")
-        mlflow.log_artifact("losses.png")
+        mlflow.log_artifact("/data2/experiment-tracking/mlflow-demo/losses.png")
+
 
 
 if __name__ == "__main__":
