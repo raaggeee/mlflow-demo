@@ -6,6 +6,11 @@ import numpy as np
 import os
 import mlflow
 import matplotlib.pyplot as plt 
+import dagshub
+
+mlflow.set_tracking_uri("https://dagshub.com/raaggeee/mlflow-demo.mlflow")
+mlflow.set_experiment("antenna-fault-torch")
+
 
 class Model(nn.Module):
     def __init__(self, input_shape, hidden_shape, output_shape):
