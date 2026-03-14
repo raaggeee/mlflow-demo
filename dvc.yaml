@@ -1,0 +1,22 @@
+stages:
+  data_ingestion:
+    cmd: python3 src/data_ingestion/data_ingestion.py
+    deps:
+    - data/raw
+    - src/data_ingestion/data_ingestion.py
+    outs:
+    - data/ingested
+  data_transform:
+    cmd: python3 src/data_transformation/data_transformation.py
+    deps:
+    - data/ingested
+    - src/data_transformation/data_transformation.py
+    outs:
+    - data/preprocessed
+  train:
+    cmd: python3 src/model_building/train.py
+    deps:
+    - data/preprocessed
+    - src/model_building/train.py
+    outs:
+    - models/model.pkl
