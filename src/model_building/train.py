@@ -8,7 +8,9 @@ import mlflow
 import matplotlib.pyplot as plt 
 import dagshub
 
+mlflow.autolog()
 dagshub.init(repo_owner="raaggeee", repo_name="mlflow-demo", mlflow=True)
+
 mlflow.set_tracking_uri("https://dagshub.com/raaggeee/mlflow-demo.mlflow")
 mlflow.set_experiment("antenna-fault-torch")
 
@@ -56,12 +58,9 @@ def train(X_train, y_train, epochs, batch_size=20, X_test=None, y_test=None):
         losses.append(loss.item())
 
         print(f"Epoch: {i}, Loss: {loss.item()}")
-    mlflow.log_metric(f"last loss: {i}", loss.item())
 
 
     torch.save(model.state_dict(), "models/model.pkl")
-    mlflow.log_param("batch_size", batch_size)
-    mlflow.log_param("epochs", epochs)
     return losses
 
 def params_yaml(yaml_path):
@@ -98,15 +97,10 @@ def main():
 
         plt.plot(np.array(loss))
         plt.savefig("losses.png")
-        mlflow.log_artifact("/data2/experiment-tracking/mlflow-demo/losses.png")
-        train_input = mlflow.data.from_pandas(train_data)
-        mlflow.log_input(train_input, "training data")
 
         mlflow.set_tag("name", "Raaggee")
-        mlflow.set_tag("experiment", "1")
-
-
-
+        mlflow.set_experiment("Experiment 4")
+        
 
 
 if __name__ == "__main__":
