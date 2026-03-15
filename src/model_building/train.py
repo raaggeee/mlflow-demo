@@ -56,7 +56,7 @@ def train(X_train, y_train, epochs, batch_size=20, X_test=None, y_test=None):
         losses.append(loss.item())
 
         print(f"Epoch: {i}, Loss: {loss.item()}")
-        mlflow.log_metric(f"loss: {i}", loss.item())
+    mlflow.log_metric(f"last loss: {i}", loss.item())
 
 
     torch.save(model.state_dict(), "models/model.pkl")
@@ -93,17 +93,24 @@ def main():
     X_train_torch = torch.tensor(X_train).to(torch.float32)
     y_train_torch = torch.tensor(y_train).to(torch.float32).unsqueeze(1)
 
-    with mlflow.start_run(run_name="torch_run1"):
+    with mlflow.start_run(run_name="torch_run3"):
         loss = train(X_train_torch, y_train_torch, epochs=10)
 
         plt.plot(np.array(loss))
         plt.savefig("losses.png")
         mlflow.log_artifact("/data2/experiment-tracking/mlflow-demo/losses.png")
+        train_input = mlflow.data.from_pandas(train_data)
+        mlflow.log_input(train_input, "training data")
+
+        mlflow.set_tag("name", "Raaggee")
+        mlflow.set_tag("experiment", "1")
+
+
 
 
 
 if __name__ == "__main__":
-    main()
+    main() 
 
 
 
