@@ -21,13 +21,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 rf = RandomForestRegressor(random_state=42)
 
 params_grdi = {
-    "n_estimators": [10, 20, 30],
-    "max_depth": [None, 2, 10, 20, 30, 100]
+    "n_estimators": [10, 20, 30, 100],
+    "max_depth": [None, 2, 10, 23, 40, 100]
 }
 
 grid_search = GridSearchCV(estimator=rf, param_grid=params_grdi, cv=5, n_jobs=-1, verbose=2)
 
-with mlflow.start_run(run_name="test3"):
+with mlflow.start_run(run_name="test8"):
     grid_search.fit(X_train, y_train)
 
     for i in range(len(grid_search.cv_results_["params"])):
@@ -60,7 +60,9 @@ with mlflow.start_run(run_name="test3"):
     mlflow.set_tag("model", "random forest")
     mlflow.set_tag("cv", "grid search")
 
-    mlflow.sklearn.log_model(grid_search.best_estimator_, "random forest")
+    mlflow.sklearn.log_model(grid_search.best_estimator_, name="random_forest", registered_model_name="random-fores-model")
+
+
 
 
 
