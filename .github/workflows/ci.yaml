@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Dpeendecies
         run: |
-          python3 -m pip install --update pip
+          python3 -m pip install --updgrade pip
           pip install requirements.txt
 
       - name: Run DVC
