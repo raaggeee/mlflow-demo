@@ -1,12 +1,12 @@
 data_ingestion:
-  input_path: "/data2/experiment-tracking/mlflow-demo/data/raw"
-  output_path: "/data2/experiment-tracking/mlflow-demo/data/ingested"
+  input_path: "data/raw"
+  output_path: "data/ingested"
 
 data_transformation:
-  input_path: "/data2/experiment-tracking/mlflow-demo/data/ingested"
-  output_path: "/data2/experiment-tracking/mlflow-demo/data/preprocessed"
+  input_path: "data/ingested"
+  output_path: "data/preprocessed"
 
 train: 
-  input_path: "/data2/experiment-tracking/mlflow-demo/data/preprocessed"
-  output_path: "/data2/experiment-tracking/mlflow-demo/data/train"
+  input_path: "data/preprocessed"
+  output_path: "data/train"
   
